@@ -590,6 +590,93 @@ tr.hl { background: var(--gold-soft); }
   user-select: all;
 }
 
+/* ---------- المساعد الذكي ---------- */
+.ast-fab {
+  position: fixed;
+  left: 22px;
+  bottom: 22px;
+  z-index: 40;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font: inherit;
+  font-weight: 800;
+  font-size: 15px;
+  color: var(--ink);
+  background: linear-gradient(135deg, #f6e2b5, var(--gold-l) 45%, #d9ab5c);
+  border: 0;
+  border-radius: 999px;
+  padding: 12px 18px 12px 20px;
+  cursor: pointer;
+  box-shadow: 0 10px 30px rgba(184, 135, 58, .45), inset 0 1px 0 rgba(255, 255, 255, .6);
+  transition: transform .15s, box-shadow .15s;
+}
+.ast-fab svg { width: 22px; height: 22px; fill: var(--ink); stroke: none; }
+.ast-fab:hover { transform: translateY(-2px); box-shadow: 0 14px 34px rgba(184, 135, 58, .55); }
+.ast-fab.active { background: var(--ink); color: var(--gold-l); box-shadow: var(--shadow-l); }
+.ast-fab.active svg { fill: var(--gold-l); }
+#login-view:not(.hidden) ~ .ast-fab, #login-view:not(.hidden) ~ .ast-panel { display: none !important; }
+
+.ast-panel {
+  position: fixed;
+  left: 22px;
+  bottom: 84px;
+  z-index: 45;
+  width: 400px;
+  max-width: calc(100vw - 32px);
+  height: min(600px, calc(100vh - 110px));
+  background: var(--card);
+  border-radius: 22px;
+  box-shadow: 0 30px 80px rgba(22, 24, 42, .35);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  animation: pop .18s ease;
+}
+.ast-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 16px;
+  background: linear-gradient(160deg, var(--ink-2), var(--ink));
+  color: #fff;
+}
+.ast-title { display: flex; align-items: center; gap: 10px; }
+.ast-title b { display: block; font-size: 16px; }
+.ast-avatar { width: 38px; height: 38px; border-radius: 12px; background: var(--gold-l); display: grid; place-items: center; }
+.ast-avatar svg { width: 22px; height: 22px; fill: var(--ink); stroke: none; }
+.ast-mode { font-size: 11.5px; color: #a9aecb; font-weight: 500; }
+.ast-mode::before { content: "●"; margin-inline-end: 5px; color: #8f94b2; }
+.ast-mode.ai { color: var(--gold-l); }
+.ast-mode.ai::before { color: #3ccf98; }
+.ast-x { font: inherit; background: rgba(255, 255, 255, .08); color: #fff; border: 0; width: 32px; height: 32px; border-radius: 10px; cursor: pointer; }
+.ast-x:hover { background: rgba(255, 255, 255, .16); }
+.ast-msgs { flex: 1; overflow-y: auto; padding: 16px; display: flex; flex-direction: column; gap: 10px; background: #faf8f4; }
+.ast-msg { max-width: 88%; padding: 10px 14px; border-radius: 16px; font-size: 14.5px; line-height: 1.75; word-wrap: break-word; }
+.ast-msg.user { align-self: flex-start; background: var(--ink); color: #fff; border-end-start-radius: 4px; }
+.ast-msg.bot { align-self: flex-end; background: #fff; border: 1px solid var(--line); border-end-end-radius: 4px; }
+.ast-msg .pos-num, .ast-msg .neg-num { font-weight: 800; }
+.ast-undo { display: block; margin-top: 8px; }
+.ast-dots { display: inline-flex; gap: 4px; padding: 4px 0; }
+.ast-dots i { width: 7px; height: 7px; border-radius: 50%; background: var(--gold); animation: blink 1s infinite ease-in-out; }
+.ast-dots i:nth-child(2) { animation-delay: .15s; }
+.ast-dots i:nth-child(3) { animation-delay: .3s; }
+@keyframes blink { 0%, 80%, 100% { opacity: .25; transform: scale(.8); } 40% { opacity: 1; transform: scale(1); } }
+.ast-chips { display: flex; gap: 6px; overflow-x: auto; padding: 10px 12px 2px; scrollbar-width: none; border-top: 1px solid var(--line-2); }
+.ast-chips::-webkit-scrollbar { display: none; }
+.ast-chips button {
+  font: inherit; font-size: 12.5px; font-weight: 700; white-space: nowrap; cursor: pointer;
+  background: var(--gold-soft); color: var(--gold-d); border: 1px solid #f1e2c2; border-radius: 999px; padding: 5px 12px;
+}
+.ast-chips button:hover { background: #f7e9cc; }
+.ast-form { display: flex; gap: 6px; padding: 10px 12px 12px; }
+.ast-form input { flex: 1; border-radius: 999px; padding: 11px 16px; }
+.ast-icon { width: 44px; height: 44px; flex: none; border-radius: 50%; border: 1.5px solid var(--line); background: #fff; color: var(--muted); cursor: pointer; display: grid; place-items: center; }
+.ast-icon svg { width: 20px; height: 20px; }
+.ast-icon:hover { color: var(--text); }
+.ast-icon.send { background: var(--ink); color: var(--gold-l); border-color: var(--ink); }
+.ast-icon.rec { background: var(--danger); color: #fff; border-color: var(--danger); animation: blink 1.2s infinite; }
+
 /* ---------- شاشات أصغر ---------- */
 @media (max-width: 1100px) {
   #app { grid-template-columns: 78px 1fr; }
@@ -646,6 +733,9 @@ tr.hl { background: var(--gold-soft); }
   input, select { font-size: 16px; }
   #toasts { left: 10px; right: 10px; bottom: 10px; }
   .toast { max-width: none; }
+  .ast-fab { left: 12px; bottom: 12px; padding: 12px; }
+  .ast-fab span { display: none; }
+  .ast-panel { left: 0; right: 0; bottom: 0; width: 100%; max-width: none; height: 88vh; border-radius: 22px 22px 0 0; }
 }
 
 
@@ -976,10 +1066,39 @@ tr.hl { background: var(--gold-soft); }
           <p class="muted">ترجع المنتجات والفواتير والمستخدمين زي ما كانت أول مرة.</p>
           <button type="button" id="reset-demo" class="btn danger">إعادة ضبط البيانات التجريبية</button>
         </div>
+        <div hidden><div id="ai-status"></div><form id="ai-form"><input id="ai-key"></form><button id="ai-remove" type="button"></button></div>
       </div>
     </section>
   </main>
 </div>
+
+<!-- ============ المساعد الذكي ============ -->
+<button id="ast-fab" class="ast-fab admin-only" title="المساعد الذكي" type="button">
+  <svg viewBox="0 0 24 24"><path d="M12 3l1.9 4.6L18.5 9.5l-4.6 1.9L12 16l-1.9-4.6L5.5 9.5l4.6-1.9z"/><path d="M19 15l.8 1.9 1.9.8-1.9.8L19 20.4l-.8-1.9-1.9-.8 1.9-.8z"/></svg>
+  <span>المساعد</span>
+</button>
+<section id="ast-panel" class="ast-panel hidden" aria-label="المساعد الذكي">
+  <header class="ast-head">
+    <div class="ast-title">
+      <span class="ast-avatar"><svg viewBox="0 0 24 24"><path d="M12 3l1.9 4.6L18.5 9.5l-4.6 1.9L12 16l-1.9-4.6L5.5 9.5l4.6-1.9z"/></svg></span>
+      <div><b>المساعد الذكي</b><span id="ast-mode" class="ast-mode">فهم محلي</span></div>
+    </div>
+    <button id="ast-close" class="ast-x" type="button" title="قفل">✕</button>
+  </header>
+  <div id="ast-msgs" class="ast-msgs"></div>
+  <div id="ast-chips" class="ast-chips">
+    <button type="button" data-q="الأرباح كام الشهر ده؟">الأرباح الشهر ده</button>
+    <button type="button" data-q="بعت كام النهارده؟">مبيعات النهارده</button>
+    <button type="button" data-q="المصروفات كام الشهر ده؟">المصروفات</button>
+    <button type="button" data-q="إيه أكتر حاجة بتتباع الشهر ده؟">الأكثر مبيعاً</button>
+    <button type="button" data-q="إيه اللي قرب يخلص من المخزون؟">المخزون</button>
+  </div>
+  <form id="ast-form" class="ast-form">
+    <input id="ast-input" autocomplete="off" maxlength="1000" placeholder="مثلاً: دفعت كهربا 850">
+    <button id="ast-mic" type="button" class="ast-icon" title="اتكلم بالصوت"><svg viewBox="0 0 24 24"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5 11a7 7 0 0 0 14 0M12 18v3"/></svg></button>
+    <button type="submit" class="ast-icon send" title="إرسال"><svg viewBox="0 0 24 24"><path d="M4 12l16-8-6 16-2-7z"/></svg></button>
+  </form>
+</section>
 
 <div id="modal" class="modal hidden"><div class="modal-card" id="modal-body"></div></div>
 <div id="toasts"></div>
@@ -1468,7 +1587,7 @@ function parseFixed(body) {
 on('GET', '/api/fixed-expenses', 'admin', () => ({
   fixed: [...DB.fixed_expenses].sort((a, b) => (!!a.end_date - !!b.end_date) || a.name.localeCompare(b.name, 'ar')),
 }));
-on('POST', '/api/fixed-expenses', 'admin', ({ body }) => { DB.fixed_expenses.push({ id: nextId('fixed_expenses'), ...parseFixed(body), created_at: now() }); return { ok: true }; });
+on('POST', '/api/fixed-expenses', 'admin', ({ body }) => { const id = nextId('fixed_expenses'); DB.fixed_expenses.push({ id, ...parseFixed(body), created_at: now() }); return { ok: true, id }; });
 on('PUT', '/api/fixed-expenses/(\\d+)', 'admin', ({ body }, fid) => {
   const f = DB.fixed_expenses.find(x => x.id === +fid);
   if (!f) throw new ApiErr(404, 'المصروف غير موجود');
@@ -1494,11 +1613,19 @@ on('GET', '/api/profit', 'admin', ({ q }) => {
     if (!per[d]) continue;
     per[d].sales += s.total; salesCount++; saleDay.set(s.id, d);
   }
+  const topMap = new Map();
   for (const i of DB.sale_items) {
     const d = saleDay.get(i.sale_id);
     if (!d) continue;
     if (i.cost == null) missing += i.qty; else per[d].cogs += i.cost * i.qty;
+    const net = i.qty - i.returned_qty;
+    if (net > 0) {
+      const t = topMap.get(i.name) || { name: i.name, qty: 0, amount: 0 };
+      t.qty += net; t.amount = r2(t.amount + net * i.price);
+      topMap.set(i.name, t);
+    }
   }
+  const top_products = [...topMap.values()].sort((a, b) => b.qty - a.qty || b.amount - a.amount).slice(0, 5);
   for (const r of DB.returns) {
     const row = per[r.created_at.slice(0, 10)];
     if (!row) continue;
@@ -1532,7 +1659,7 @@ on('GET', '/api/profit', 'admin', ({ q }) => {
   const tot = k => r2(days.reduce((a, d) => a + per[d][k], 0));
   const nr = tot('net_revenue'), cogs = tot('cogs'), fx = tot('fixed'), vr = tot('variable');
   return {
-    from, to, days: rows, fixed_items: fixedItems,
+    from, to, days: rows, fixed_items: fixedItems, top_products,
     variable_by_category: [...byCat].map(([category, amount]) => ({ category, amount: r2(amount) })).sort((a, b) => b.amount - a.amount),
     summary: {
       sales_count: salesCount, sales: tot('sales'), refunds: tot('refunds'), exchange_diff: tot('exchange_diff'),
@@ -1573,6 +1700,10 @@ on('POST', '/api/drawer/open', 'user', () => {
   if (!DB.settings.drawer_printer) throw new ApiErr(400, 'مفيش درج متظبط — اختار طابعة الدرج من الإعدادات');
   return { ok: true };
 });
+
+// المساعد في النسخة التجريبية: الفهم المحلي بس (مفيش سيرفر يكلم الذكاء الاصطناعي)
+on('GET', '/api/assistant/status', 'admin', () => ({ ai: false, sdk: true, has_key: false, key_saved: false }));
+on('PUT', '/api/assistant/key', 'admin', () => { throw new ApiErr(400, 'في النسخة التجريبية الذكاء الاصطناعي مش متاح — الفهم المحلي شغال عادي'); });
 
 function resetDemo() { DB = seedDB(); SID = null; persist(); }
 return { handle, ApiErr, resetDemo };
@@ -3055,6 +3186,415 @@ $('#test-drawer').addEventListener('click', async () => {
     showLogin();
   }
 })();
+
+
+/* =====================================================================
+   المساعد الذكي
+   - فهم محلي (هنا في الصفحة): مجاني ومن غير إنترنت، بيفهم الجمل المعتادة بالمصري
+   - لو فيه مفتاح API في الإعدادات: الرسالة بتروح لموديل الذكاء الاصطناعي عن طريق السيرفر (/api/assistant/chat)
+     ولو النت فصل أو حصلت مشكلة، بيرجع للفهم المحلي لوحده
+   ===================================================================== */
+const AST = { open: false, busy: false, history: [], ai: false, statusLoaded: false };
+
+/* ---------- تنظيف النص العربي ---------- */
+function normAr(s) {
+  return String(s || '')
+    .replace(/[٠-٩]/g, d => '٠١٢٣٤٥٦٧٨٩'.indexOf(d))
+    .replace(/[۰-۹]/g, d => '۰۱۲۳۴۵۶۷۸۹'.indexOf(d))
+    .replace(/[ً-ْـ]/g, '')          // تشكيل وتطويل
+    .replace(/[أإآ]/g, 'ا').replace(/ة/g, 'ه').replace(/ى/g, 'ي')
+    .replace(/٫/g, '.').replace(/،/g, ',')
+    .replace(/(\d),(?=\d{3}\b)/g, '$1')                // 15,000 → 15000
+    .replace(/\s+/g, ' ').trim().toLowerCase();
+}
+
+/* ---------- أنواع المصروفات ---------- */
+const AST_CATS = [
+  ['كهرباء', /كهربا|كهرباء|الكهربا|فاتوره النور|عداد/],
+  ['مياه', /مياه|(^|\s)(ال)?ميه(\s|$)|مايه/],
+  ['مرتبات', /مرتب|رواتب|راتب|يوميه|يوميات|قبض/],
+  ['إيجار', /ايجار|اجار/],
+  ['إنترنت وتليفون', /(^|\s)(ال)?نت(\s|$)|انترنت|تليفون|موبايل|رصيد|باقه/],
+  ['نقل ومواصلات', /نقل|مواصلات|توصيل|شحن|بنزين|عربيه|تاكسي|اوبر/],
+  ['صيانة', /صيانه|تصليح|اصلاح|سباك|كهربائي|نجار/],
+  ['أدوات ومستلزمات', /اكياس|شنط|تغليف|ورق|ادوات|مستلزمات|بكر/],
+  ['ضيافة', /اكل|شاي|قهوه|بوفيه|ضيافه|غدا|فطار|عشا/],
+  ['نظافة', /نظافه|منظفات|عامل النظافه/],
+  ['ضرائب ورسوم', /ضرايب|ضرائب|رسوم|تامينات|رخصه/],
+];
+const catOf = t => (AST_CATS.find(([, rx]) => rx.test(t)) || [null])[0];
+
+/* ---------- المبلغ ---------- */
+function parseAmount(t) {
+  t = t.replace(/\d{1,2}\s*[\/\-]\s*\d{1,2}(\s*[\/\-]\s*\d{2,4})?/g, ' ').replace(/و\s*نص/g, 'ونص');
+  const m = t.match(/(\d+(?:\.\d+)?)\s*(الاف|الف|k)?(\s*ونص)?/);
+  if (m) {
+    let n = parseFloat(m[1]);
+    if (m[2]) n *= 1000;
+    if (m[3]) n += m[2] ? 500 : 0.5;
+    return n;
+  }
+  if (/الفين/.test(t)) return 2000 + (/الفين ونص/.test(t) ? 500 : 0);
+  if (/(^|\s)الف(\s|$)/.test(t)) return 1000 + (/الف ونص/.test(t) ? 500 : 0);
+  return null;
+}
+
+/* ---------- التاريخ / الفترة ---------- */
+function parseDay(t) {
+  const today = new Date(); today.setHours(0, 0, 0, 0);
+  if (/اول امبارح/.test(t)) return isoDate(addDays(today, -2));
+  if (/امبارح|امس/.test(t)) return isoDate(addDays(today, -1));
+  const m = t.match(/(\d{1,2})\s*[\/\-]\s*(\d{1,2})(?:\s*[\/\-]\s*(\d{2,4}))?/);
+  if (m) {
+    const y = m[3] ? (m[3].length === 2 ? 2000 + +m[3] : +m[3]) : today.getFullYear();
+    const d = new Date(y, +m[2] - 1, +m[1]);
+    if (!isNaN(d)) return isoDate(d);
+  }
+  return isoDate(today);
+}
+function parsePeriod(t, fallback) {
+  const today = new Date(); today.setHours(0, 0, 0, 0);
+  const R = (a, b, label) => ({ from: isoDate(a), to: isoDate(b), label });
+  if (/اول امبارح/.test(t)) return R(addDays(today, -2), addDays(today, -2), 'أول امبارح');
+  if (/امبارح|امس/.test(t)) return R(addDays(today, -1), addDays(today, -1), 'امبارح');
+  if (/النهارده|انهارده|اليوم|النهاردا/.test(t)) return R(today, today, 'النهارده');
+  if (/الاسبوع (اللي فات|الي فات|الماضي|اللى فات)/.test(t)) { const [a, b] = presetRange('last-week'); return R(a, b, 'الأسبوع اللي فات'); }
+  if (/الاسبوع|الاسبوع ده|هذا الاسبوع/.test(t)) { const [a, b] = presetRange('this-week'); return R(a, b, 'الأسبوع ده'); }
+  if (/الشهر (اللي فات|الي فات|الماضي|اللى فات)/.test(t)) { const [a, b] = presetRange('last-month'); return R(a, b, 'الشهر اللي فات'); }
+  if (/الشهر|الشهر ده|هذا الشهر/.test(t)) { const [a, b] = presetRange('this-month'); return R(a, b, 'الشهر ده'); }
+  if (/السنه|السنه دي|من اول السنه/.test(t)) return R(new Date(today.getFullYear(), 0, 1), today, 'السنة دي');
+  return fallback === 'today' ? R(today, today, 'النهارده')
+    : (() => { const [a, b] = presetRange('this-month'); return R(a, b, 'الشهر ده'); })();
+}
+
+/* ---------- تسجيل المصروفات ---------- */
+// كلمات مالهاش لازمة في وصف المصروف (بنشيلها كلمة كلمة — \b مش بيشتغل مع العربي)
+const FILLER = new Set(('انا احنا دفعت دفعنا صرفت صرفنا اتدفع اتصرف سجل سجلي سجللي ضيف ضيفلي اضف حط حطلي مصروف ' +
+  'مصاريف فلوس جنيه جنيها ج جم ج.م ج.م. النهارده انهارده امبارح اول كل شهر شهري شهريا في ال على علي بتاع بتاعه ' +
+  'بتاعت يا لو سمحت من فضلك و ونص الف الاف الفين k').split(' '));
+function describe(seg, cat) {
+  let d = seg.replace(/\d{1,2}\s*[\/\-]\s*\d{1,2}([\/\-]\d{2,4})?/g, ' ').replace(/\d+(?:\.\d+)?/g, ' ')
+    .split(' ').filter(w => w && !FILLER.has(w)).join(' ').trim();
+  if (!d || d.length < 2 || normAr(cat || '').includes(d) || d.length > 60) return '';
+  // النص اتوحّد (ة → ه) عشان الفهم — نرجّع التاء المربوطة في آخر الكلمة عشان الوصف يتكتب صح
+  return d.split(' ').map(w => /ه$/.test(w) && !/^(ال)?(ميه|مياه|الله)$/.test(w) && w.length > 2 ? w.slice(0, -1) + 'ة' : w).join(' ');
+}
+
+async function localAddExpenses(raw, t) {
+  const monthly = /كل شهر|شهري|شهريا|في الشهر/.test(t);
+  const day = parseDay(t);
+  // "كهربا 850 و مياه 120" → مصروفين
+  const segs = t.replace(/و\s*نص/g, 'ونص').split(/\s*(?:,|\n|\+|\sو(?=\s*\S+\s+\d)|\sكمان\s)\s*/).filter(Boolean);
+  const items = [];
+  for (const seg of segs) {
+    const amount = parseAmount(seg);
+    if (amount == null) continue;
+    const cat = catOf(seg) || catOf(t) || 'أخرى';
+    items.push({ amount, cat, desc: describe(seg, cat) });
+  }
+  if (!items.length) return { reply: 'تمام، بس المبلغ كام؟ اكتبلي مثلاً: «دفعت كهربا 850».' };
+  const done = [], actions = [];
+  for (const it of items) {
+    if (it.amount <= 0) continue;
+    if (monthly) {
+      const name = it.desc || it.cat;
+      const r = await api('POST', '/api/fixed-expenses', { name, amount: it.amount, start_date: todayStr().slice(0, 8) + '01' });
+      done.push(`📅 <b>${esc(name)}</b>: ${money(it.amount)} كل شهر`);
+      actions.push({ type: 'fixed', id: r.id, label: name });
+    } else {
+      const r = await api('POST', '/api/expenses', { category: it.cat, amount: it.amount, description: it.desc, expense_date: day });
+      done.push(`🧾 <b>${esc(it.cat)}</b>${it.desc ? ` (${esc(it.desc)})` : ''}: ${money(it.amount)}`);
+      actions.push({ type: 'expense', id: r.expense?.id, label: it.cat });
+    }
+  }
+  const when = monthly ? '' : (day === todayStr() ? ' بتاريخ النهارده' : ` بتاريخ ${day}`);
+  return { html: `اتسجل ✔${when}:<br>${done.join('<br>')}`, actions };
+}
+
+/* ---------- المنتجات: السعر والمخزون ---------- */
+// أقرب منتج للكلام (بالاسم كامل، أو بأكتر كلمات مشتركة)
+function matchProduct(t) {
+  let best = null, score = 0;
+  for (const p of state.products) {
+    const n = normAr(p.name);
+    if (t.includes(n)) return p;
+    const s = n.split(' ').filter(w => w.length > 2 && t.includes(w.replace(/^ال/, ''))).length;
+    if (s > score) { best = p; score = s; }
+  }
+  return best;
+}
+const productBody = p => ({ name: p.name, price: p.price, cost: p.cost ?? '', stock: p.stock, barcode: p.barcode || '' });
+
+async function localProductCommand(t, amount) {
+  const p = matchProduct(t);
+  if (!p) return null;
+  const prev = productBody(p);
+  // تغيير السعر: "خلي سعر الفازة 700" / "غير سعر الشمعدان لـ 600" / "سعر الشراء بتاع ..."
+  if (/سعر/.test(t) && /غير|خلي|عدل|اعمل|يبقى|بقى|بقا|خليه|نزل|ارفع|زود سعر/.test(t)) {
+    const isCost = /سعر الشرا|الشرا|التكلفه/.test(t);
+    const body = { ...prev, [isCost ? 'cost' : 'price']: amount };
+    await api('PUT', '/api/products/' + p.id, body);
+    return { html: `اتعدل ✔ ${isCost ? 'سعر شراء' : 'سعر'} <b>${esc(p.name)}</b>: ${money(isCost ? (p.cost ?? 0) : p.price)} ← <b>${money(amount)}</b>`,
+      actions: [{ type: 'product', id: p.id, label: p.name, prev }], changed: true };
+  }
+  // المخزون: "زود الفازة 10" / "وصلني 5 شمعدان" / "خلي مخزون الساعة 8"
+  if (/زود|ضيف|زوّد|وصل|جالي|جالنا|جه|جت|دخل|نزل|اشتريت/.test(t) && !/سعر/.test(t)) {
+    const qty = Math.round(amount);
+    await api('PUT', '/api/products/' + p.id, { ...prev, stock: p.stock + qty });
+    return { html: `اتزود ✔ <b>${esc(p.name)}</b>: ${p.stock} + ${qty} = <b>${p.stock + qty}</b> قطعة`,
+      actions: [{ type: 'product', id: p.id, label: p.name, prev }], changed: true };
+  }
+  if (/مخزون|كميه|خلي/.test(t) && /خلي|عدل|اعمل|يبقى|بقى/.test(t)) {
+    const qty = Math.round(amount);
+    await api('PUT', '/api/products/' + p.id, { ...prev, stock: qty });
+    return { html: `اتعدل ✔ مخزون <b>${esc(p.name)}</b>: ${p.stock} ← <b>${qty}</b> قطعة`,
+      actions: [{ type: 'product', id: p.id, label: p.name, prev }], changed: true };
+  }
+  return null;
+}
+
+/* ---------- الأسئلة ---------- */
+const pct = (a, b) => b ? Math.round(a / b * 100) : 0;
+
+async function localAnswer(raw) {
+  const t = normAr(raw);
+  const has = rx => rx.test(t);
+  const amount = parseAmount(t);
+  const question = has(/كام|قد ايه|ايه|اعرف|وريني|اعرض|احسب|تقرير|[?؟]|هل|ازاي|فين|مين/);
+  const addVerb = has(/دفعت|دفعنا|صرفت|صرفنا|اتدفع|اتصرف|سجل|ضيف|اضف|حط|حطلي/);
+
+  if (has(/^(اهلا|السلام|صباح|مساء|هاي|هلا|ازيك|ازيكم)/) && t.length < 25)
+    return { reply: 'أهلاً بيك 👋 قولي دفعت إيه أسجله، أو اسألني عن الأرباح والمبيعات.' };
+
+  if (has(/اشتريت بضاعه|جبت بضاعه|بضاعه جديده|اشترينا بضاعه/))
+    return { reply: 'شراء البضاعة مش مصروف — زوّد الكمية في المخزون من شاشة «المنتجات»، والسيستم بيحسب تكلفتها لوحده من سعر الشراء.' };
+
+  // تعديل سعر أو مخزون منتج
+  if (amount != null && !question) {
+    const r = await localProductCommand(t, amount);
+    if (r) return r;
+  }
+
+  // تسجيل مصروف: فيه مبلغ + (فعل دفع أو نوع مصروف) ومش سؤال
+  if (amount != null && (addVerb || catOf(t)) && !(question && !addVerb))
+    return localAddExpenses(raw, t);
+
+  // أكتر حاجة بتتباع
+  if (has(/(اكتر|احسن|افضل|اكثر).*(بيع|بتتباع|اتباع|مبيع|بيتباع|بتبيع)|الاكثر مبيعا|بيتباع اكتر/)) {
+    const p = parsePeriod(t, 'month');
+    const d = await api('GET', `/api/profit?from=${p.from}&to=${p.to}`);
+    const top = d.top_products || [];
+    if (!top.length) return { reply: `مفيش مبيعات ${p.label}.` };
+    return { html: `أكتر حاجة اتباعت ${p.label}:<br>` + top.map((x, i) => `${i + 1}. <b>${esc(x.name)}</b> — ${x.qty} قطعة (${money(x.amount)})`).join('<br>') };
+  }
+
+  // المخزون
+  if (has(/مخزون|ناقص|خلص|خلصان|يخلص|نفد|قليل|هيخلص/)) {
+    const { products } = await api('GET', '/api/products');
+    const low = products.filter(p => p.stock <= 3).sort((a, b) => a.stock - b.stock);
+    if (!low.length) return { reply: 'المخزون تمام 👌 مفيش منتج قرب يخلص (كلهم أكتر من 3 قطع).' };
+    return { html: 'المنتجات اللي قربت تخلص:<br>' + low.slice(0, 12).map(p => `• <b>${esc(p.name)}</b> — ${p.stock <= 0 ? '<span class="neg-num">خلص</span>' : `فاضل ${p.stock}`}`).join('<br>') };
+  }
+
+  // الأرباح
+  if (has(/ربح|ارباح|مكسب|كسبت|كسبنا|كسبان|صافي|خسر|خساره/)) {
+    const p = parsePeriod(t, 'month');
+    const d = await api('GET', `/api/profit?from=${p.from}&to=${p.to}`);
+    const s = d.summary;
+    const word = s.net_profit >= 0 ? 'صافي الربح' : 'صافي الخسارة';
+    return {
+      html: `<b>${p.label}</b> (${p.from === p.to ? p.from : `${p.from} ← ${p.to}`}):<br>` +
+        `💰 الفلوس اللي دخلت: <b>${money(s.net_revenue)}</b> (${s.sales_count} فاتورة)<br>` +
+        `📦 تكلفة البضاعة: ${money(s.cogs)}<br>` +
+        `🧾 المصروفات: ${money(s.expenses)} <span class="muted">(ثابتة ${money(s.fixed)} + متغيرة ${money(s.variable)})</span><br>` +
+        `<b class="${s.net_profit >= 0 ? 'pos-num' : 'neg-num'}">${word}: ${money(Math.abs(s.net_profit))}</b>` +
+        (s.net_revenue ? ` <span class="muted">(${pct(s.net_profit, s.net_revenue)}٪ من المبيعات)</span>` : '') +
+        (s.missing_cost_qty ? `<br><span class="muted small">⚠ ${s.missing_cost_qty} قطعة من غير سعر شراء — الربح ممكن يطلع أعلى من الحقيقي.</span>` : ''),
+    };
+  }
+
+  // المصروفات
+  if (has(/مصروفات|مصاريف|صرفت|صرفنا|المصروف|دفعت كام|دفعنا كام/)) {
+    const p = parsePeriod(t, 'month');
+    const d = await api('GET', `/api/profit?from=${p.from}&to=${p.to}`);
+    const s = d.summary;
+    const lines = [...d.fixed_items.map(f => `• ${esc(f.name)}: ${money(f.share)}`),
+      ...d.variable_by_category.map(c => `• ${esc(c.category)}: ${money(c.amount)}`)];
+    return { html: `مصروفات ${p.label}: <b>${money(s.expenses)}</b>` + (lines.length ? '<br>' + lines.join('<br>') : '') };
+  }
+
+  // المبيعات
+  if (has(/مبيعات|بعت|بعنا|بيعنا|دخل|ايراد|فواتير|فاتوره|اتباع|البيع|الفلوس/)) {
+    const p = parsePeriod(t, 'today');
+    const d = await api('GET', `/api/sales?from=${p.from}&to=${p.to}`);
+    const s = d.summary;
+    const bym = (d.by_method || []).map(m => `${esc(PAY[m.method] || m.method)} ${money(m.total)}`).join(' · ');
+    return {
+      html: `مبيعات <b>${p.label}</b>: <b>${money(s.total)}</b> في ${s.count} فاتورة` +
+        (s.refunds ? `<br>مرتجعات: ${money(s.refunds)} — الصافي ${money(s.net)}` : '') +
+        (bym ? `<br><span class="muted">${bym}</span>` : ''),
+    };
+  }
+
+  // سعر/مخزون منتج معين
+  const prod = state.products.find(p => t.includes(normAr(p.name))) ||
+    (has(/سعر|بكام|كام قطعه|موجود|فاضل/) && state.products.find(p => normAr(p.name).split(' ').some(w => w.length > 2 && t.includes(w))));
+  if (prod) return { html: `<b>${esc(prod.name)}</b>: السعر ${money(prod.price)}${prod.cost != null ? ` — الشراء ${money(prod.cost)}` : ''} — فاضل ${prod.stock} قطعة` };
+
+  return {
+    html: 'مفهمتش قصدك 🙏 جرّب حاجة زي:<br>• «دفعت كهربا 850»<br>• «مرتبات 12000 كل شهر»<br>• «الأرباح كام الشهر ده؟»<br>• «بعت كام النهارده؟»<br>• «إيه اللي قرب يخلص؟»' +
+      (AST.ai ? '' : '<br><span class="muted small">ولو حطيت مفتاح الذكاء الاصطناعي في الإعدادات، هفهم أي كلام.</span>'),
+  };
+}
+
+/* ---------- الواجهة ---------- */
+function astAdd(role, content, isHtml = false, actions = []) {
+  const box = $('#ast-msgs');
+  const el = document.createElement('div');
+  el.className = 'ast-msg ' + role;
+  el.innerHTML = isHtml ? content : esc(content).replace(/\n/g, '<br>');
+  for (const a of actions || []) {
+    if (!a.id) continue;
+    const b = document.createElement('button');
+    b.className = 'btn small ghost ast-undo';
+    b.textContent = `↩ تراجع (${a.label})`;
+    b.onclick = async () => {
+      try {
+        if (a.type === 'product') await api('PUT', '/api/products/' + a.id, a.prev);   // يرجّع المنتج زي ما كان
+        else await api('DELETE', (a.type === 'fixed' ? '/api/fixed-expenses/' : '/api/expenses/') + a.id);
+        b.disabled = true; b.textContent = '✔ اتلغى';
+        astRefreshViews();
+      } catch (err) { toast(err.message, 'error'); }
+    };
+    el.appendChild(b);
+  }
+  box.appendChild(el);
+  box.scrollTop = box.scrollHeight;
+  return el;
+}
+function astRefreshViews() {
+  // أي تعديل (منتجات، أسعار، مخزون، مصروفات...) يظهر على طول في الشاشة المفتوحة
+  loadProducts().catch(() => { });
+  if (state.view !== 'pos') Promise.resolve(loaders[state.view]?.()).catch(() => { });
+}
+
+async function astLoadStatus() {
+  try {
+    const s = await api('GET', '/api/assistant/status');
+    AST.ai = !!s.ai;
+  } catch { AST.ai = false; }
+  AST.statusLoaded = true;
+  $('#ast-mode').textContent = AST.ai ? 'ذكاء اصطناعي' : 'فهم محلي';
+  $('#ast-mode').classList.toggle('ai', AST.ai);
+  return AST.ai;
+}
+
+async function astSend(text) {
+  text = String(text || '').trim();
+  if (!text || AST.busy) return;
+  AST.busy = true;
+  $('#ast-input').value = '';
+  astAdd('user', text);
+  const wait = astAdd('bot', '<span class="ast-dots"><i></i><i></i><i></i></span>', true);
+  let res = null, note = '';
+  try {
+    if (!AST.statusLoaded) await astLoadStatus();
+    if (AST.ai) {
+      try {
+        res = await api('POST', '/api/assistant/chat', { message: text, history: AST.history });
+      } catch (err) {
+        note = `<div class="muted small">(${esc(err.message)} — رديت بالفهم المحلي)</div>`;
+      }
+    }
+    if (!res) res = await localAnswer(text);
+  } catch (err) {
+    res = { reply: 'حصلت مشكلة: ' + err.message };
+  }
+  wait.remove();
+  const html = res.html || esc(res.reply || '').replace(/\n/g, '<br>');
+  astAdd('bot', html + note, true, res.actions);
+  AST.history.push({ role: 'user', content: text }, { role: 'assistant', content: (res.reply || res.html || '').replace(/<[^>]+>/g, ' ') });
+  AST.history = AST.history.slice(-10);
+  if (res.actions?.length || res.changed) astRefreshViews();
+  AST.busy = false;
+}
+
+function astToggle(open = !AST.open) {
+  AST.open = open;
+  $('#ast-panel').classList.toggle('hidden', !open);
+  $('#ast-fab').classList.toggle('active', open);
+  if (open) {
+    if (!$('#ast-msgs').children.length)
+      astAdd('bot', `أهلاً 👋 أنا المساعد. قولي <b>دفعت إيه</b> وأنا أسجله في المصروفات، أو اسألني عن <b>الأرباح والمبيعات والمخزون</b>.`, true);
+    astLoadStatus();
+    setTimeout(() => $('#ast-input').focus(), 50);
+  } else focusScanner();
+}
+
+$('#ast-fab').addEventListener('click', () => astToggle());
+$('#ast-close').addEventListener('click', () => astToggle(false));
+$('#ast-form').addEventListener('submit', e => { e.preventDefault(); astSend($('#ast-input').value); });
+$('#ast-chips').addEventListener('click', e => { const c = e.target.closest('[data-q]'); if (c) astSend(c.dataset.q); });
+$('#ast-input').addEventListener('keydown', e => { if (e.key === 'Escape') astToggle(false); e.stopPropagation(); });
+
+/* الكلام بالصوت (لو المتصفح بيدعمه — Edge و Chrome) */
+(() => {
+  const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
+  const mic = $('#ast-mic');
+  if (!SR) { mic.classList.add('hidden'); return; }
+  let rec = null;
+  mic.addEventListener('click', () => {
+    if (rec) { rec.stop(); return; }
+    rec = new SR();
+    rec.lang = 'ar-EG';
+    rec.interimResults = true;
+    mic.classList.add('rec');
+    rec.onresult = e => {
+      const txt = [...e.results].map(r => r[0].transcript).join(' ');
+      $('#ast-input').value = txt;
+      if (e.results[e.results.length - 1].isFinal) { rec.stop(); astSend(txt); }
+    };
+    rec.onerror = e => { if (e.error !== 'aborted' && e.error !== 'no-speech') toast('الميكروفون: ' + e.error, 'error'); };
+    rec.onend = () => { mic.classList.remove('rec'); rec = null; };
+    rec.start();
+  });
+})();
+
+/* ---------- إعدادات مفتاح الذكاء الاصطناعي ---------- */
+async function astRenderSettings() {
+  const box = $('#ai-status');
+  if (!box) return;
+  try {
+    const s = await api('GET', '/api/assistant/status');
+    box.innerHTML = s.ai
+      ? '<span class="badge green">شغال بالذكاء الاصطناعي ✔</span>'
+      : !s.sdk ? '<span class="badge orange">مكتبة الذكاء الاصطناعي مش متسطبة — الفهم المحلي بس</span>'
+        : '<span class="badge">مفيش مفتاح — الفهم المحلي بس</span>';
+    $('#ai-remove').classList.toggle('hidden', !s.key_saved);
+  } catch { box.innerHTML = ''; }
+}
+$('#ai-form').addEventListener('submit', async e => {
+  e.preventDefault();
+  const key = $('#ai-key').value.trim();
+  if (!key) return;
+  try {
+    await api('PUT', '/api/assistant/key', { key });
+    $('#ai-key').value = '';
+    toast('المفتاح اتحفظ ✔', 'success');
+    AST.statusLoaded = false;
+    astRenderSettings();
+  } catch (err) { toast(err.message, 'error'); }
+});
+$('#ai-remove').addEventListener('click', async () => {
+  if (!confirm('تشيل مفتاح الذكاء الاصطناعي؟ المساعد هيرجع للفهم المحلي.')) return;
+  try { await api('PUT', '/api/assistant/key', { key: '' }); AST.statusLoaded = false; astRenderSettings(); toast('المفتاح اتشال', 'success'); }
+  catch (err) { toast(err.message, 'error'); }
+});
+// لما شاشة الإعدادات تفتح، نحدّث حالة المفتاح
+{
+  const orig = loaders.settings;
+  loaders.settings = async () => { await orig(); await astRenderSettings(); };
+}
 
 
 /* ---- إضافات النسخة التجريبية ---- */
